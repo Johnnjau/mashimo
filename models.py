@@ -6,6 +6,8 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Float, nullable=False)
+    user = db.Column(db.String(100), nullable=False)
+    object = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
     # Add other fields as needed
 
