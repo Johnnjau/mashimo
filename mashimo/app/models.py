@@ -33,12 +33,12 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
+
     about_me: so.Mapped[Optional[str]] = so.mapped_column(sa.String(140))
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(
         default=lambda: datetime.now(timezone.utc))
 
-    
+
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     body: so.Mapped[str] = so.mapped_column(sa.String(140))
@@ -63,3 +63,12 @@ class Post(db.Model):
 def load_user(id):
     return db.session.get(User, int(id))
 
+
+class Technician(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    service = db.Column(db.String(100), nullable=False)
+    contact_info = db.Column(db.String(255))
+
+    def __repr__(self):
+        return f'Technician({self.name}, {self.service})'

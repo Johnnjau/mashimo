@@ -14,24 +14,17 @@ from flask import request
 from urllib.parse import urlsplit
 from datetime import datetime, timezone
 from app.forms import EditProfileForm
+from app.models import Technician
+import sys
+print(sys.path)
 
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-    user = {'username': 'Miguel'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', posts=posts)
+    technicians = Technician.query.all()
+    return render_template('index.html', title='Home', technicians=technicians)
 
 
 @app.route('/login', methods=['GET', 'POST'])

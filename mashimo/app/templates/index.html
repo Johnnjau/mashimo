@@ -1,8 +1,15 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Technicians Offering Services</h1>
+    <ul>
+        {% for technician in technicians %}
+            <li>{{ technician.name }} - {{ technician.service }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
 
-{% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% for post in posts %}
-    <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
-    {% endfor %}
-{% endblock %}
