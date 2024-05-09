@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm
 from app.models import User, Technician
+from flask import request
 
 
 @app.route('/')
