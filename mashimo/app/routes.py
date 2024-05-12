@@ -1,8 +1,8 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlsplit
 from datetime import datetime, timezone
-from app import app, db
+from . import db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm
 from app.models import User, Technician
 from flask import request
@@ -11,6 +11,7 @@ from flask import request
 @app.route('/')
 @login_required
 def index():
+    print("Route:", request.url_rule)
     technicians = Technician.query.all()
     return render_template('index.html', title='Home', technicians=technicians)
 
