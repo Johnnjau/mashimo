@@ -9,7 +9,7 @@ from logging.handlers import SMTPHandler
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
-login.login_view = 'auth.login'
+login.login_view = 'main.login'
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -19,8 +19,8 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     login.init_app(app)
 
-    from .routes import app
-    app.register_blueprint(app)
+    from .routes import bp
+    app.register_blueprint(bp)
 
     return app
 
