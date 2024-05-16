@@ -9,12 +9,13 @@ from flask import request
 
 bp = Blueprint("main", __name__)
 
+
 @bp.route('/')
 @login_required
 def index():
     print("Route:", request.url_rule)
     technicians = Technician.query.all()
-    return render_template('index.html', title='Home', technicians=technicians)
+    return render_template('index.html', technicians=technicians)
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -88,3 +89,16 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
+
+
+@bp.route('/', methods=['GET', 'POST'])
+def index():
+    technicians = Technician.query.all()
+    if request.method == 'POST':
+        customer_name = request.form['customer_name']
+        service_needed = request.form['service_needed']
+        new_request = CustomerRequest(customer_name=customer_name, service_needed=service_needed)
+        db.session.add(new_request)
+        db.session.commit()
+    requests = CustomerRequest.query.all()
+    return render_template('index.html', technicians=technicians, requests=requests)

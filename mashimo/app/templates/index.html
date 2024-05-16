@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html>
-{% extends "base.html" %}
 <head>
-    <title>Home Page</title>
+    <title>Home</title>
 </head>
 <body>
-    <h1>Technicians Offering Services</h1>
+    <h1>Technicians</h1>
     <ul>
         {% for technician in technicians %}
-            <li>{{ technician.name }} - {{ technician.service }}</li>
+        <li>{{ technician.name }} - {{ technician.category }}</li>
+        {% endfor %}
+    </ul>
+    <h1>Submit Request</h1>
+    <form method="post">
+        <label for="customer_name">Your Name:</label>
+        <input type="text" id="customer_name" name="customer_name" required><br>
+        <label for="service_needed">Service Needed:</label>
+        <input type="text" id="service_needed" name="service_needed" required><br>
+        <input type="submit" value="Submit Request">
+    </form>
+    <h1>Customer Requests</h1>
+    <ul>
+        {% for request in requests %}
+        <li>{{ request.customer_name }} - {{ request.service_needed }}</li>
         {% endfor %}
     </ul>
 </body>
 </html>
-
