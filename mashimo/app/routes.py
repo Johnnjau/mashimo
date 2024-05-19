@@ -9,14 +9,14 @@ from flask import request
 
 bp = Blueprint("main", __name__)
 
-
+"""
 @bp.route('/')
 @login_required
 def index():
     print("Route:", request.url_rule)
     technicians = Technician.query.all()
     return render_template('index.html', technicians=technicians)
-
+"""
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -102,3 +102,4 @@ def index():
         db.session.commit()
     requests = CustomerRequest.query.all()
     return render_template('index.html', technicians=technicians, requests=requests)
+    
