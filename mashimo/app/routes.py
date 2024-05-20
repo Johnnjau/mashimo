@@ -4,8 +4,9 @@ from urllib.parse import urlsplit
 from datetime import datetime, timezone
 from . import db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm
-from app.models import User, Technician
+from app.models import User, Technician, CustomerRequest
 from flask import request
+from sqlalchemy.exc import SQLAlchemyError
 
 bp = Blueprint("main", __name__)
 
@@ -95,11 +96,23 @@ def edit_profile():
 def index():
     technicians = Technician.query.all()
     if request.method == 'POST':
-        customer_name = request.form['customer_name']
-        service_needed = request.form['service_needed']
-        new_request = CustomerRequest(customer_name=customer_name, service_needed=service_needed)
-        db.session.add(new_request)
-        db.session.commit()
+        customer_name = request.form.get('customer_name')
+        service_needed = request.form.get('service_needed')
+        
+        if not customer_name or not service_needed:
+            flash('Both customer name and service needed are required', 'error')
+        else:
+            new_request = CustomerRequest(customer_name=customer_name, service_needed=service_needed)
+            try:
+                db.session.add(new_request)
+                db.session.commit()
+                flash('Request submitted successfully', 'success')
+            except SQLAlchemyError as e:
+                db.session.rollback()
+                flash('Error submitting request', 'error')
+                print(f"Error: {e}")
+        
+        return redirect(url_for('bp.index'))
+
     requests = CustomerRequest.query.all()
-    return render_template('index.html', technicians=technicians, requests=requests)
-    
+    return render_template('index.html', technicians=technicians, requests=requests)    
