@@ -115,4 +115,12 @@ def index():
         return redirect(url_for('bp.index'))
 
     requests = CustomerRequest.query.all()
-    return render_template('index.html', technicians=technicians, requests=requests)    
+    return render_template('index.html', technicians=technicians, requests=requests)
+
+
+@bp.route('/requests')
+@login_required
+def requests():
+    # Replace with your actual data fetching logic
+    requests = []
+    return render_template('requests.html', title='Customer Requests', requests=requests)

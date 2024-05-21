@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         {% if title %}
@@ -8,12 +9,14 @@
     </head>
     <body>
         <div>
-             mashimo:Technicians Offering Services
+            mashimo: Technicians Offering Services
             <a href="{{ url_for('main.index') }}">Home</a>
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('main.login') }}">Login</a>
+            <a href="{{ url_for('main.signup') }}">Sign Up</a>
             {% else %}
-	    <a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
+            <a href="{{ url_for('main.requests') }}">Customer Requests</a>
+            <a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
             <a href="{{ url_for('main.logout') }}">Logout</a>
             {% endif %}
         </div>
