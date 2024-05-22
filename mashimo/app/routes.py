@@ -116,7 +116,14 @@ def index():
 
     return render_template('index.html', technicians=technicians)
 
+
 @bp.route('/customer_requests', methods=['GET'])
 def customer_requests():
     requests = CustomerRequest.query.all()
     return render_template('customer_requests.html', requests=requests)
+
+
+@bp.route('/signup', methods=['GET', 'POST'])
+def signup():
+    # Your signup logic here
+    return render_template('signup.html')
