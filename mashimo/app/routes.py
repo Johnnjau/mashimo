@@ -19,6 +19,7 @@ def index():
     return render_template('index.html', technicians=technicians)
 """
 
+
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -98,7 +99,7 @@ def index():
     if request.method == 'POST':
         customer_name = request.form.get('customer_name')
         service_needed = request.form.get('service_needed')
-        
+
         if not customer_name or not service_needed:
             flash('Both customer name and service needed are required', 'error')
         else:
@@ -107,20 +108,16 @@ def index():
                 db.session.add(new_request)
                 db.session.commit()
                 flash('Request submitted successfully', 'success')
+                return redirect(url_for('bp.customer_requests'))
             except SQLAlchemyError as e:
                 db.session.rollback()
                 flash('Error submitting request', 'error')
                 print(f"Error: {e}")
-        
-        return redirect(url_for('bp.index'))
 
+    return render_template('index.html', technicians=technicians)
+
+
+@bp.route('/customer_requests', methods=['GET'])
+def customer_requests():
     requests = CustomerRequest.query.all()
-    return render_template('index.html', technicians=technicians, requests=requests)
-
-
-@bp.route('/requests')
-@login_required
-def requests():
-    # Replace with your actual data fetching logic
-    requests = []
-    return render_template('requests.html', title='Customer Requests', requests=requests)
+    return render_template('customer_requests.html', requests=requests)
