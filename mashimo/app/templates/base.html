@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        {% if title %}
-        <title>{{ title }} - mashimo</title>
+<head>
+    {% if title %}
+    <title>{{ title }} - mashimo</title>
+    {% else %}
+    <title>mashimo</title>
+    {% endif %}
+</head>
+<body>
+    <div>
+        mashimo: Technicians Offering Services
+        <a href="{{ url_for('main.index') }}">Home</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('main.login') }}">Login</a>
+        <a href="{{ url_for('main.register') }}">Sign Up</a>
         {% else %}
-        <title>mashimo</title>
+        <a href="{{ url_for('main.customer_requests') }}">Customer Requests</a>
+        <a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
+        <a href="{{ url_for('main.logout') }}">Logout</a>
         {% endif %}
-    </head>
-    <body>
-        <div>
-            mashimo: Technicians Offering Services
-            <a href="{{ url_for('main.index') }}">Home</a>
-            {% if current_user.is_anonymous %}
-            <a href="{{ url_for('main.login') }}">Login</a>
-            <a href="{{ url_for('main.signup') }}">Sign Up</a>
-            {% else %}
-            <a href="{{ url_for('main.requests') }}">Customer Requests</a>
-            <a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
-            <a href="{{ url_for('main.logout') }}">Logout</a>
-            {% endif %}
-        </div>
-        <hr>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-    </body>
+    </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</body>
 </html>

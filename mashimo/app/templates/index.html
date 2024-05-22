@@ -1,23 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Mashimo</h1>
-<ul>
-    {% for technician in technicians %}
-    <li>{{ technician.name }} - {{ technician.category }}</li>
-    {% endfor %}
-</ul>
-<h1>Submit Request</h1>
-<form method="POST" action="{{ url_for('bp.index') }}">
-    {{ form.hidden_tag() }}
+  <h1>Welcome to the Technician Service Portal</h1>
+  <form method="POST" action="{{ url_for('main.index') }}">
     <div>
-        <label for="customer_name">Customer Name:</label>
-        <input type="text" id="customer_name" name="customer_name" required>
+      <label for="customer_name">Customer Name:</label>
+      <input type="text" id="customer_name" name="customer_name" required>
     </div>
     <div>
-        <label for="service_needed">Service Needed:</label>
-        <input type="text" id="service_needed" name="service_needed" required>
+      <label for="service_needed">Service Needed:</label>
+      <input type="text" id="service_needed" name="service_needed" required>
     </div>
     <button type="submit">Submit Request</button>
-</form>
+  </form>
+  <ul>
+    {% for technician in technicians %}
+      <li>{{ technician.name }} - {{ technician.service }}</li>
+    {% endfor %}
+  </ul>
 {% endblock %}

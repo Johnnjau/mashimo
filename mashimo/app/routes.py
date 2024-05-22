@@ -99,7 +99,7 @@ def index():
     if request.method == 'POST':
         customer_name = request.form.get('customer_name')
         service_needed = request.form.get('service_needed')
-
+        
         if not customer_name or not service_needed:
             flash('Both customer name and service needed are required', 'error')
         else:
@@ -108,14 +108,13 @@ def index():
                 db.session.add(new_request)
                 db.session.commit()
                 flash('Request submitted successfully', 'success')
-                return redirect(url_for('bp.customer_requests'))
+                return redirect(url_for('main.customer_requests'))
             except SQLAlchemyError as e:
                 db.session.rollback()
                 flash('Error submitting request', 'error')
                 print(f"Error: {e}")
 
     return render_template('index.html', technicians=technicians)
-
 
 @bp.route('/customer_requests', methods=['GET'])
 def customer_requests():

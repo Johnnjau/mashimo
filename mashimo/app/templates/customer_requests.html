@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Customer Requests</title>
-</head>
-<body>
-    <h1>Customer Requests</h1>
-    <ul>
-        {% for request in requests %}
-            <li>{{ request.customer_name }} needs {{ request.service_needed }} at {{ request.timestamp }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('bp.index') }}">Back to Home</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Customer Requests</h1>
+  <a href="{{ url_for('main.index') }}">Back to Home</a>
+  <ul>
+    {% for request in requests %}
+      <li>{{ request.customer_name }} needs {{ request.service_needed }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
